@@ -5,25 +5,22 @@
   become: yes
 
   tasks:
-    - name: Update VM
+    - name: Update package cache
       apt:
         update_cache: yes
-        upgrade: yes
 
     - name: Install Docker
       apt:
         name: docker.io
         state: present
 
-    - name: Pull Docker Image
-      docker_image:
-        name: hello-world
-        source: pull
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
 
-    - name: Run Docker Container
-      docker_container:
-        name: hello-world-container
-        image: hello-world
+    - name: Start Nginx Service
+      service:
+        name: nginx
         state: started
-        ports:
-          - "8080:80"
+        enabled: yes
