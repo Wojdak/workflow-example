@@ -1,5 +1,17 @@
+terraform {
+  required_providers {
+    digitalocean = {
+      source  = "digitalocean/digitalocean"
+      version = "~> 2.0"
+    }
+  }
+}
+
+variable "do_token" {}
+
+# Configure the DigitalOcean Provider
 provider "digitalocean" {
-  token = dop_v1_c2d5e614da2a28eccf28fd2342a09916e1cccb9e2595d09a28c959fafc69557e
+  token = var.do_token
 }
 
 resource "digitalocean_droplet" "example" {
