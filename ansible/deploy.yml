@@ -1,0 +1,29 @@
+---
+- name: Deploy Application
+  hosts: droplet
+  gather_facts: yes
+  become: yes
+
+  tasks:
+    - name: Update VM
+      apt:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Pull Docker Image
+      docker_image:
+        name: hello-world
+        source: pull
+
+    - name: Run Docker Container
+      docker_container:
+        name: hello-world-container
+        image: hello-world
+        state: started
+        ports:
+          - "8080:80"
